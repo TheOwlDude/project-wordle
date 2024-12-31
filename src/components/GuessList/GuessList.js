@@ -1,14 +1,21 @@
 import {range} from "../../utils";
 import {NUM_OF_GUESSES_ALLOWED} from "../../constants";
 import {checkGuess} from "../../game-helpers";
+import {GameStateContext} from "../GameStateProvider";
+import {useContext} from "react";
 
-function GuessList( {guessList, answer} ) {
+function GuessList() {
+    
+    const {answer, guessList} = useContext(GameStateContext);
+    console.log(`GuessList length: ${guessList.length}`);
+    console.log(`GuessList component answer: ${answer}`);
     return (
         <div className="guess-results">
             {
                 range(0, NUM_OF_GUESSES_ALLOWED, 1).map( i => {
                     if (i < guessList.length) {
                         const guessResult = checkGuess(guessList[i].guess, answer);
+                        console.log(`guessResult: ${JSON.stringify(guessResult)}`);
                         return (
                             <p className="guess" key={`display${guessList[i].id}`}>
                                 <span className={`cell ${guessResult[0].status}`}>{guessList[i].guess[0]}</span>

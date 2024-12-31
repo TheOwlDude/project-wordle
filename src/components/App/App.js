@@ -1,15 +1,23 @@
 import Game from '../Game';
 import Header from '../Header';
+import {createContext} from "react";
+import GameStateProvider from "../GameStateProvider";
+import ConsistentWords from "../ConsistentWords";
+
 
 function App() {
   return (
-    <div className="wrapper">
-      <Header />
+    <GameStateProvider>  
+      <div className="wrapper">
+        <Header />
 
-      <div className="game-wrapper">
-        <Game />
+        <div className="game-wrapper">
+          <Game />
+          <ConsistentWords />
+        </div>
+
       </div>
-    </div>
+    </GameStateProvider>
   );
 }
 

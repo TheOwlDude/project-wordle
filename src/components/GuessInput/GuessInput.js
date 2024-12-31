@@ -1,26 +1,31 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {NUM_OF_GUESSES_ALLOWED} from "../../constants";
+import { v4 as uuidv4 } from 'uuid';
+import {GameStateContext} from "../GameStateProvider";
+import {WORD_LIST} from "../../word-list";
 
-function GuessInput({guessList, setGuessList, answer}) {
+function GuessInput() {
+    const {answer, guessList, setGuessList, setGameOver} = useContext(GameStateContext);
     const [guess, setGuess] = React.useState('');
-    
-    const [gameOver, setGameOver] = React.useState(false);
     
     return (
         <form className="guess-input-wrapper" onSubmit={
             (event) => {
                 event.preventDefault();
 
-                const newGuessList = [...guessList, {guess, id: crypto.randomUUID()}];
+                const newGuessList = [...guessList, {guess, id: uuidv4()}];
 
                 if (guessList.length >= NUM_OF_GUESSES_ALLOWED) {
                     setGameOver(true);
                     //alert('No more guess allowed :-(');
                     return;
                 }
-
-                console.log({guess});
-
+                
+                if(!WORD_LIST.includes(guess)) {
+                    alert("Your guess is not in the allowed word list");
+                    return;
+                }
+                
                 setGuessList(newGuessList);
                 setGuess("");
 
@@ -34,6 +39,7 @@ function GuessInput({guessList, setGuessList, answer}) {
                 id="guess-input"
                 value={guess}
                 pattern="[A-Z]{5}"
+                required={true}
                 maxLength="5"
                 autoFocus={true}
                 autoComplete="off"
