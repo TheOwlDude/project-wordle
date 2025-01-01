@@ -2,7 +2,7 @@ import Game from '../Game';
 import Header from '../Header';
 import {createContext} from "react";
 import GameStateProvider from "../GameStateProvider";
-import ConsistentWords from "../ConsistentWords";
+import CheatMode from "../CheatMode";
 
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
 
         <div className="game-wrapper">
           <Game />
-          <ConsistentWords />
+          <CheatMode />
         </div>
 
       </div>
